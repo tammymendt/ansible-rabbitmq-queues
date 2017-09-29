@@ -1,16 +1,8 @@
 galaxy_info:
   author: Tamara Mendt
   description: a role to manage RabbitMQ exchanges and queues
-  company: HelloFresh (optional)
-
-  # Some suggested licenses:
-  # - BSD (default)
-  # - MIT
-  # - GPLv2
-  # - GPLv3
-  # - Apache
-  # - CC-BY
-  license: license (GPLv2, CC-BY, etc)
+  company: HelloFresh
+  license: MIT
 
   min_ansible_version: 1.2
 
