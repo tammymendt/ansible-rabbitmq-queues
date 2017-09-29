@@ -1,0 +1,16 @@
+---
+# Look at http://docs.ansible.com/ansible/latest/rabbitmq_exchange_module.html for defaults
+- name: Manage exchanges
+  rabbitmq_exchange:
+    login_user              : "{{ item.login_user | default(rabbitmq_login_credentials['user'] | default(omit)) }}"
+    login_password          : "{{ item.login_password | default(rabbitmq_login_credentials['password'] | default(omit)) }}"
+    login_host              : "{{ item.login_host | default(rabbitmq_login_credentials['host'] | default(omit)) }}"
+    login_port              : "{{ item.login_port | default(rabbitmq_login_credentials['port'] | default(omit)) }}"
+    vhost                   : "{{ item.vhost | default(omit) }}"
+    name                    : "{{ item.exchange_name }}"
+    exchange_type           : "{{ item.exchange_type | default(omit) }}"
+    durable                 : "{{ item.durable | default(omit) }}"
+    internal                : "{{ item.internal | default(omit) }}"
+    auto_delete             : "{{ item.auto_delete | default(omit) }}"
+    state                   : "{{ item.state | default(omit) }}"
+  with_items                : "{{ rabbitmq_exchanges_definitions }}"

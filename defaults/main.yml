@@ -1,2 +1,39 @@
 ---
-# defaults file for ansible-rabbitmq-queues/
+
+rabbitmq_login_credentials                    : {}
+# Example:
+# rabbitmq_login_credentials:
+#   host        : "localhost"
+#   port        : 15672
+#   user        : "guest"
+#   password    :
+
+rabbitmq_exchanges_definitions                : []
+# Example:
+#  - exchange_name   : "some_exchange"
+#    vhost           : "/"
+#    state           : absent
+
+rabbitmq_queues_definitions                   : []
+# Example:
+#  - queue_name    : "queue-1"
+#    vhost         : "/"
+#    state         : present
+#    bindings:
+#      - routing_key   : "*.labels.generated"
+#        exchange      : "some-exchange-1"
+#        state         : absent
+#      - routing_key   : "*.*.generated"
+#        exchange      : "some-exchange-1"
+#        state         : present
+#      - routing_key   : "*.generated.*"
+#        exchange      : "some-exchange-2"
+#        state         : present
+#
+#  - queue_name    : "label.deleted"
+#    exchange      : "shipping-label" - source exchange for all bindings to this queue
+#    vhost         : "/"
+#    state         : present
+#    bindings:
+#      - routing_key   : "*.labels.deleted"
+#        state         : present

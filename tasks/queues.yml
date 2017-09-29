@@ -1,0 +1,31 @@
+---
+# Look at http://docs.ansible.com/ansible/latest/rabbitmq_queue_module.html for defaults
+- name: Manage queues
+  rabbitmq_queue:
+    login_user              : "{{ item.login_user | default(rabbitmq_login_credentials['user'] | default(omit)) }}"
+    login_password          : "{{ item.login_password | default(rabbitmq_login_credentials['password'] | default(omit)) }}"
+    login_host              : "{{ item.login_host | default(rabbitmq_login_credentials['host'] | default(omit)) }}"
+    login_port              : "{{ item.login_port | default(rabbitmq_login_credentials['port'] | default(omit)) }}"
+    vhost                   : "{{ item.vhost | default(omit) }}"
+    name                    : "{{ item.queue_name }}"
+    durable                 : "{{ item.durable | default(omit) }}"
+    auto_delete             : "{{ item.auto_delete | default(omit) }}"
+    auto_expires            : "{{ item.auto_expires | default(omit) }}"
+    state                   : "{{ item.state | default(omit) }}"
+  with_items                : "{{ rabbitmq_queues_definitions }}"
+
+- name: Manage queue bindings
+  rabbitmq_binding:
+    login_user              : "{{ item.0.login_user | default(rabbitmq_login_credentials['user'] | default(omit)) }}"
+    login_password          : "{{ item.0.login_password | default(rabbitmq_login_credentials['password'] | default(omit)) }}"
+    login_host              : "{{ item.0.login_host | default(rabbitmq_login_credentials['host'] | default(omit)) }}"
+    login_port              : "{{ item.0.login_port | default(rabbitmq_login_credentials['port'] | default(omit)) }}"
+    name                    : "{{ item.0.exchange if item.0.exchange is defined else item.1.exchange }}"
+    destination_type        : queue
+    destination             : "{{ item.0.queue_name }}"
+    vhost                   : "{{ item.0.vhost }}"
+    routing_key             : "{{ item.1.routing_key }}"
+    state                   : "{{ item.1.state | default(omit) }}"
+  with_subelements:
+    - "{{ rabbitmq_queues_definitions }}"
+    - bindings
