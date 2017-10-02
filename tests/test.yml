@@ -1,5 +1,6 @@
 ---
 - hosts: localhost
+  connection: local
   vars:
     - rabbitmq_exchanges_definitions:
       - exchange_name   : "some_exchange"
