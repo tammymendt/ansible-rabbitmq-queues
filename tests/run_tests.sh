@@ -11,11 +11,11 @@ docker exec rabbit-mgmt rabbitmqctl list_queues |  wc -l | egrep "^\s*2$"
 docker exec rabbit-mgmt rabbitmqctl list_bindings | egrep "some_exchange\s+exchange\s+label\.deleted\s+queue\s+\*\.labels\.deleted"
 docker exec rabbit-mgmt rabbitmqctl list_bindings | egrep "some_exchange\s+exchange\s+label\.deleted\s+queue\s+us\.\*"
 docker exec rabbit-mgmt rabbitmqctl list_bindings
-docker exec rabbit-mgmt rabbitmqctl list_bindings |  wc -l | egrep "^\s*3$"
+docker exec rabbit-mgmt rabbitmqctl list_bindings |  wc -l | egrep "^\s*4$"
 
 echo "Executing playbook with second set of variables. Remove bindings"
 ansible-playbook -i localhost, play.yml -e @vars_2.yml
-docker exec rabbit-mgmt rabbitmqctl list_bindings |  wc -l | egrep "^\s*1$"
+docker exec rabbit-mgmt rabbitmqctl list_bindings |  wc -l | egrep "^\s*2$"
 
 echo "Executing playbook with second set of variables. Remove exchanges"
 ansible-playbook -i localhost, play.yml -e @vars_3.yml

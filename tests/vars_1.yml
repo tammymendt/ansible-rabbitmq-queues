@@ -4,11 +4,11 @@ rabbitmq_exchanges_definitions:
     state           : present
 
 rabbitmq_queues_definitions:
-  - queue_name    : "label.deleted"
+  - queue_name    : "some_queue"
     exchange      : "some_exchange"
     state         : present
     vhost         : "/"
     bindings:
-      - routing_key   : "*.labels.deleted"
+      - routing_key   : "*.labels"
         state         : present
       - routing_key   : "us.*"
