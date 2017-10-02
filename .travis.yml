@@ -13,7 +13,7 @@ install:
   - pip install ansible==2.3.2.0
 
 script:
-    - ping -c 3 rabbit
+  - ls -la
 
 after_success:
     - echo "Success"
