@@ -1,19 +1,19 @@
 ---
 language: python
 python: "2.7"
-#services:
-#  - docker
+services:
+  - docker
 
 before_install:
-  # Make sure everything's up to date.
   - sudo apt-get update -qq
   - sudo apt-get install -qq python-pip
+  - docker run -d --hostname rabbit --name rabbit-mgmt -p 8080:15672 rabbitmq:3-management
 
 install:
   - pip install ansible==2.3.2.0
 
 script:
-    - echo "test"
+    - ping -c 3 rabbit
 
 after_success:
     - echo "Success"
