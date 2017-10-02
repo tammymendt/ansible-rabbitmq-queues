@@ -1,11 +1,11 @@
 rabbitmq_exchanges_definitions:
-  - exchange_name   : "some_exchange"
+  - exchange_name   : "{{ lookup('env', 'EXCHANGE_NAME') }}"
     vhost           : "/"
     state           : present
 
 rabbitmq_queues_definitions:
-  - queue_name    : "some_queue"
-    exchange      : "some_exchange"
+  - queue_name    : "{{ lookup('env', 'QUEUE_NAME') }}"
+    exchange      : "{{ lookup('env', 'EXCHANGE_NAME') }}"
     state         : present
     vhost         : "/"
     bindings:
