@@ -13,14 +13,18 @@ install:
   - pip install ansible==2.3.2.0
 
 script:
-  - cd tests && ansible-playbook -i localhost, test.yml
-  - docker exec rabbit-mgmt rabbitmqctl list_exchanges | wc -l | egrep "^\s*2$"
+  - cd tests && ansible-playbook -i localhost, play.yml -e @vars_1.yml
+  - docker exec rabbit-mgmt rabbitmqctl list_queues | egrep -v "^amq\." | wc -l | egrep "^\s*2$"
   - docker exec rabbit-mgmt rabbitmqctl list_exchanges | egrep "some_exchange\s+direct"
   - docker exec rabbit-mgmt rabbitmqctl list_queues | egrep "label.deleted\s+"
   - docker exec rabbit-mgmt rabbitmqctl list_queues |  wc -l | egrep "^\s*2$"
   - docker exec rabbit-mgmt rabbitmqctl list_bindings | egrep "some_exchange\s+exchange\s+label\.deleted\s+queue\s+\*\.labels\.deleted"
   - docker exec rabbit-mgmt rabbitmqctl list_bindings | egrep "some_exchange\s+exchange\s+label\.deleted\s+queue\s+us\.\*"
   - docker exec rabbit-mgmt rabbitmqctl list_bindings |  wc -l | egrep "^\s*3$"
+  - cd tests && ansible-playbook -i localhost, play.yml -e @vars_2.yml
+  - docker exec rabbit-mgmt rabbitmqctl list_bindings |  wc -l | egrep "^\s*1$"
+  - cd tests && ansible-playbook -i localhost, play.yml -e @vars_3.yml
+  - docker exec rabbit-mgmt rabbitmqctl list_queues | egrep -v "^amq\." | wc -l | egrep "^\s*1$"
 
 after_success:
     - echo "Success"

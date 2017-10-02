@@ -1,0 +1,10 @@
+rabbitmq_queues_definitions:
+  - queue_name    : "label.deleted"
+    state         : present
+    vhost         : "/"
+    exchange      : "some_exchange"
+    bindings:
+      - routing_key   : "*.labels.deleted"
+        state         : absent
+      - routing_key   : "us.*"
+        state         : absent
