@@ -1,0 +1,4 @@
+rabbitmq_exchanges_definitions:
+  - exchange_name   : "some_exchange"
+    vhost           : "/"
+    state           : absent
