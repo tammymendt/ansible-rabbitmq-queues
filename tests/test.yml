@@ -1,5 +1,19 @@
 ---
 - hosts: localhost
-  remote_user: root
+  vars:
+    - rabbitmq_exchanges_definitions:
+      - exchange_name   : "some_exchange"
+        vhost           : "/"
+        state           : present
+
+    - rabbitmq_queues_definitions:
+      - queue_name    : "label.deleted"
+        exchange      : "shipping-label"
+        state         : present
+        bindings:
+          - routing_key   : "*.labels.deleted"
+            state         : present
+          - routing_key   : "us.*"
+
   roles:
-    - ansible-rabbitmq-queues/
+    - ansible-rabbitmq-queues
