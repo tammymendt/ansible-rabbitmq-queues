@@ -7,13 +7,14 @@ services:
 before_install:
   - sudo apt-get update -qq
   - sudo apt-get install -qq python-pip
-  - docker run -d --hostname rabbit --name rabbit-mgmt -P rabbitmq:3-management
+  - docker run -d --hostname rabbit --name rabbit-mgmt -p 15672:15672 rabbitmq:3-management
 
 install:
   - pip install ansible==2.3.2.0
 
 script:
   - cd tests && ansible-playbook -i localhost, test.yml
+  - docker exec rabbit-mgmt rabbitmqctl list_exchanges | egrep "some_exchange\s+direct"
 
 after_success:
     - echo "Success"
