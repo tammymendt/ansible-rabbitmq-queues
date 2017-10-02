@@ -1,4 +1,4 @@
-Role Name
+ansible-rabbitmq-queues
 =========
 
 This is a simple role created to perform exchange and queue management on RabbitMQ. It uses
