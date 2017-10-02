@@ -4,13 +4,17 @@ python: "2.7"
 services:
   - docker
 
+env:
+  - ANSIBLE_VERSION=2.3.2.0
+  - ANSIBLE_VERSION=2.4.0.0 
+
 before_install:
   - sudo apt-get update -qq
   - sudo apt-get install -qq python-pip
   - docker run -d --hostname rabbit --name rabbit-mgmt -p 15672:15672 rabbitmq:3-management
 
 install:
-  - pip install ansible==2.3.2.0
+  - pip install ansible==$ANSIBLE_VERSION
 
 script:
   - cd tests && ansible-playbook -i localhost, play.yml -e @vars_1.yml
