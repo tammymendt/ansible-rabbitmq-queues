@@ -8,8 +8,9 @@
 
     - rabbitmq_queues_definitions:
       - queue_name    : "label.deleted"
-        exchange      : "shipping-label"
+        exchange      : "some_exchange"
         state         : present
+        vhost         : "/"
         bindings:
           - routing_key   : "*.labels.deleted"
             state         : present
